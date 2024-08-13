@@ -2,17 +2,39 @@
 <idea-plugin>
     <id>com.github.dekola.androidcleanarchitecturetemplateplugin</id>
     <name>Android-Clean-Architecture-Template-Plugin</name>
-    <vendor>dekola</vendor>
+    <vendor email="Akano.Adekola@gmail.com" logo="pluginIcon.svg"
+        url="https://dekola.github.io/Akano_Adekola_Portfolio/">
+        Adekola Akano
+    </vendor>
 
-    <depends>com.intellij.modules.platform</depends>
+
+    <description><![CDATA[
+      Android Studio plugin for Creating clean architecture template folder and classes in Java and Kotlin.
+    ]]></description>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.android</depends>
+
+    <change-notes><![CDATA[
+      <ul>
+        <li>1.0 - Initial release</li>
+      </ul>
+    ]]>
+    </change-notes>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.dekola.androidcleanarchitecturetemplateplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.dekola.androidcleanarchitecturetemplateplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <actions>
+        <group description="Create clean arc template" id="com.adekola.androidcleanarchitecturetemplateplugin.Actions"
+            text="Clean arc template">
+            <add-to-group anchor="last" group-id="ToolsMenu" />
+            <action class="com.github.dekola.androidcleanarchitecturetemplateplugin"
+                description="Create clean arc template"
+                id="com.adekola.androidcleanarchitecturetemplateplugin" text="Create clean arc template" />
+        </group>
+    </actions>
+
+
 </idea-plugin>
+
