@@ -7,7 +7,6 @@
         Adekola Akano
     </vendor>
 
-
     <description><![CDATA[
       Android Studio plugin for Creating clean architecture template folder and classes in Java and Kotlin.
     ]]></description>
@@ -19,22 +18,23 @@
       <ul>
         <li>1.0 - Initial release</li>
       </ul>
-    ]]>
-    </change-notes>
+    ]]></change-notes>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-
     <actions>
-        <group description="Create clean arc template" id="com.adekola.androidcleanarchitecturetemplateplugin.Actions"
-            text="Clean arc template">
-            <add-to-group anchor="last" group-id="ToolsMenu" />
-            <action class="com.github.dekola.androidcleanarchitecturetemplateplugin"
-                description="Create clean arc template"
-                id="com.adekola.androidcleanarchitecturetemplateplugin" text="Create clean arc template" />
+        <group id="com.adekola.androidcleanarchitecturetemplateplugin.Actions" text="Clean arc template">
+            <action id="com.adekola.androidcleanarchitecturetemplateplugin.CreateCleanArchitectureTemplate"
+                class="com.github.dekola.androidcleanarchitecturetemplateplugin.CreateCleanArchitectureTemplate"
+                text="Create clean arc template"
+                description="Create clean arc template">
+                <!-- Add to DirectoryPopupMenu group -->
+                <add-to-group group-id="NewGroup" anchor="last"/>
+<!--                <add-to-group group-id="someGroupId" relative-to-action="someActionId" anchor="first/last/before someActionOrGroupId/after someActionOrGroupId"/>-->
+
+
+            </action>
         </group>
     </actions>
 
-
 </idea-plugin>
-
