@@ -2,7 +2,7 @@ package com.github.dekola.androidcleanarchitecturetemplateplugin
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.util.ui.JBUI
+import com.intellij.openapi.ui.Messages
 import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.GridBagConstraints
@@ -14,8 +14,6 @@ import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JRadioButton
-import javax.swing.JScrollPane
-import javax.swing.JTextArea
 import javax.swing.JTextField
 
 
@@ -33,7 +31,7 @@ class CleanArchitectureTemplateName(private val event: AnActionEvent) : DialogWr
     private val languageGroup: ButtonGroup = ButtonGroup()
 
     private val featureNameText: JLabel = JLabel()
-    private val createClassButton = JButton("Create ")
+    private val createClassButton = JButton("Create")
 
     init {
         init()
@@ -45,7 +43,6 @@ class CleanArchitectureTemplateName(private val event: AnActionEvent) : DialogWr
     override fun createCenterPanel(): JComponent {
         panel = JPanel(GridBagLayout())
         val constraints = GridBagConstraints()
-
 
         featureNameText.text = "Class Name"
         constraints.gridy += 1
@@ -76,8 +73,49 @@ class CleanArchitectureTemplateName(private val event: AnActionEvent) : DialogWr
         constraints.weighty = 1.0
         panel.add(Box.createVerticalGlue(), constraints)
 
+        createClassButton.addActionListener {
+            try {
+                createTemplate()
+            } catch (e: Exception) {
+                showErrorDialog(e.message, title = "Error Creating Classes")
+            }
+        }
         return panel
     }
 
+    private fun createTemplate() {
+        val selectedLanguage = getSelectedLanguage();
+        when (selectedLanguage) {
+            LanguageSelection.JAVA -> {
+
+            }
+
+            LanguageSelection.KOTLIN -> {
+
+            }
+
+            LanguageSelection.FLUTTER -> {
+
+            }
+        }
+
+    }
+
+    private fun getSelectedLanguage(): LanguageSelection {
+        return if (javaRadioButton.isSelected) {
+            LanguageSelection.JAVA
+        } else {
+            LanguageSelection.KOTLIN
+        }
+    }
+
+    private fun showErrorDialog(errorMessage: String?, title: String = "Validation Result") {
+        Messages.showMessageDialog(
+            panel,
+            errorMessage,
+            title,
+            Messages.getInformationIcon(),
+        )
+    }
 
 }
