@@ -3,6 +3,9 @@ package com.github.dekola.androidcleanarchitecturetemplateplugin
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiDirectory
+import com.intellij.psi.PsiManager
 import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.GridBagConstraints
@@ -17,7 +20,10 @@ import javax.swing.JRadioButton
 import javax.swing.JTextField
 
 
-class CleanArchitectureTemplateName(private val event: AnActionEvent) : DialogWrapper(true) {
+class CleanArchitectureTemplateName(
+    private val event: AnActionEvent,
+    private val selectedFile: VirtualFile
+) : DialogWrapper(true) {
 
     private lateinit var panel: JPanel
 
@@ -85,19 +91,33 @@ class CleanArchitectureTemplateName(private val event: AnActionEvent) : DialogWr
 
     private fun createTemplate() {
         val selectedLanguage = getSelectedLanguage();
-        when (selectedLanguage) {
-            LanguageSelection.JAVA -> {
+        event.project?.let { projectEvent ->
+//            chooseFolder(projectEvent)?.let { selectedFolder ->
 
-            }
+            val folder: PsiDirectory? =
+                PsiManager.getInstance(projectEvent).findDirectory(selectedFile)
+            ClassCreator.createTemplateStructure(
+                projectEvent,
+                folder,
+                featureNameTextField.text,
+                selectedLanguage,
+                getPackageName(selectedFile!!)
+            )
 
-            LanguageSelection.KOTLIN -> {
-
-            }
-
-            LanguageSelection.FLUTTER -> {
-
-            }
         }
+//        when (selectedLanguage) {
+//            LanguageSelection.JAVA -> {
+//
+//            }
+//
+//            LanguageSelection.KOTLIN -> {
+//
+//            }
+//
+//            LanguageSelection.FLUTTER -> {
+//
+//            }
+//        }
 
     }
 
@@ -116,6 +136,19 @@ class CleanArchitectureTemplateName(private val event: AnActionEvent) : DialogWr
             title,
             Messages.getInformationIcon(),
         )
+    }
+
+
+    fun getPackageName(file: VirtualFile): String {
+        val filePath = file.path
+        val index = filePath.indexOf("/java/")
+
+        return if (index != -1) {
+            val packagePath = filePath.substring(index + 6) // +6 to skip over "/java/"
+            packagePath.replace('/', '.')
+        } else {
+            ""
+        }
     }
 
 }
