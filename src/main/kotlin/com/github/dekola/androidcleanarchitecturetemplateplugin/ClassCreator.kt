@@ -19,23 +19,23 @@ object ClassCreator {
 //        val directory = PsiManager.getInstance(project)
 //            baseDirectory.findDirectory(project.baseDir)
 
+        val baseFeatureDirectory = createDirectory(project, baseDirectory, featureName.replaceFirstChar { it.lowercase() })
 
-
-
-        val baseFeatureDirectory = createDirectory(project, baseDirectory, featureName)
-
-        val viewModelDirectory = createDirectory(project, baseFeatureDirectory, "UI")
+        val viewModelDirectory = createDirectory(project, baseFeatureDirectory, "ui")
         val dataDirectory = createDirectory(project, baseFeatureDirectory, "data")
         val repositoryDirectory = createDirectory(project, dataDirectory, "repository")
         val remoteDataSourceDirectory = createDirectory(project, dataDirectory, "remoteDataSource")
         val apiDirectory = createDirectory(project, dataDirectory, "api")
 
         val viewModelCode:String = CodeGeneratorClass.getViewModelCode(selectedLanguage, baseDirectory, featureName, packageName)
-        val repositoryCode:String = CodeGeneratorClass.getRepositoryCode(selectedLanguage, baseDirectory, featureName)
-        val remoteDataSourceCode:String = CodeGeneratorClass.getRemoteDataSourceCode(selectedLanguage, baseDirectory, featureName)
-        val apiInterfaceCode:String = CodeGeneratorClass.getApiInterfaceCode(selectedLanguage, baseDirectory, featureName)
+        val repositoryCode:String = CodeGeneratorClass.getRepositoryCode(selectedLanguage, baseDirectory, featureName, packageName)
+        val remoteDataSourceCode:String = CodeGeneratorClass.getRemoteDataSourceCode(selectedLanguage, baseDirectory, featureName, packageName)
+        val apiInterfaceCode:String = CodeGeneratorClass.getApiInterfaceCode(selectedLanguage, baseDirectory, featureName, packageName)
 
         createClass(project, viewModelDirectory, selectedLanguage, featureName, "ViewModel", viewModelCode)
+        createClass(project, repositoryDirectory, selectedLanguage, featureName, "Repository", repositoryCode)
+        createClass(project, remoteDataSourceDirectory, selectedLanguage, featureName, "RemoteDataSource", remoteDataSourceCode)
+        createClass(project, apiDirectory, selectedLanguage, featureName, "ApiInterface", apiInterfaceCode)
 
     }
 

@@ -11,35 +11,37 @@ object CodeGeneratorClass {
         packageName: String
     ): String {
 
+        val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
+        val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
+
+
         return when (selectedLanguage) {
             LanguageSelection.JAVA -> {
-                return """
-                
-                package ${packageName}.ui.${featureName}
-    
-                import com.cookpad.hiring.android.data.entities.Collection
-                import com.cookpad.hiring.android.data.repository.CollectionListRepository
-                import dagger.hilt.android.lifecycle.HiltViewModel
-                import javax.inject.Inject
-                
-                @HiltViewModel
-                class ${featureName}ViewModel @Inject constructor(private val repository: ${featureName}Repository) :
-                
-                }
-    
+                return """package ${packageName}.${featureNameLowerCase}.ui
+                    
+
+import ${packageName}.${featureNameLowerCase}.data.repository.${featureName}Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) {
+
+}
             """
             }
 
             LanguageSelection.KOTLIN -> {
 
-                return """package ${packageName}.ui.${featureName}
+                return """package ${packageName}.${featureNameLowerCase}.ui
+                    
 
-import com.cookpad.hiring.android.data.repository.CollectionListRepository
+import ${packageName}.${featureNameLowerCase}.data.repository.${featureName}Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ${featureName}ViewModel @Inject constructor(private val repository: ${featureName}Repository) :
+class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) : {
 
 }
             """
@@ -47,20 +49,17 @@ class ${featureName}ViewModel @Inject constructor(private val repository: ${feat
             }
 
             LanguageSelection.FLUTTER -> {
-                return """
-                
-                package ${folder}.ui.${featureName}
-    
-                import com.cookpad.hiring.android.data.entities.Collection
-                import com.cookpad.hiring.android.data.repository.CollectionListRepository
-                import dagger.hilt.android.lifecycle.HiltViewModel
-                import javax.inject.Inject
-                
-                @HiltViewModel
-                class ${featureName}ViewModel @Inject constructor(private val repository: ${featureName}Repository) :
-                
-                }
-    
+                return """package ${packageName}.${featureNameLowerCase}.ui
+                    
+
+import ${packageName}.${featureNameLowerCase}.data.repository.${featureName}Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) : {
+
+}
             """
             }
         }
@@ -69,27 +68,65 @@ class ${featureName}ViewModel @Inject constructor(private val repository: ${feat
     fun getRepositoryCode(
         selectedLanguage: LanguageSelection,
         folder: PsiDirectory?,
-        featureName: String?
+        featureName: String?,
+        packageName: String
     ): String {
-        return ""
+        val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
+        val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
+
+
+        return """package ${packageName}.${featureNameLowerCase}.data.repository
+
+import ${packageName}.${featureNameLowerCase}.data.remoteDataSource.${featureName}RemoteDataSource
+import javax.inject.Inject
+
+class ${featureNameUpperCase}Repository @Inject constructor(
+    private val remoteDataSource: ${featureNameUpperCase}RemoteDataSource,
+) {
+
+}"""
     }
 
     fun getRemoteDataSourceCode(
         selectedLanguage: LanguageSelection,
         folder: PsiDirectory?,
-        featureName: String?
+        featureName: String?,
+        packageName: String
 
     ): String {
-        return ""
+        val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
+        val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
+
+
+        return """package ${packageName}.${featureNameLowerCase}.data.remoteDataSource
+
+import ${packageName}.${featureNameLowerCase}.data.api.${featureName}ApiService
+import javax.inject.Inject
+
+class ${featureNameUpperCase}RemoteDataSource @Inject constructor(
+    private val apiService: ${featureNameUpperCase}ApiService
+) {
+
+}
+"""
 
     }
 
     fun getApiInterfaceCode(
         selectedLanguage: LanguageSelection,
         folder: PsiDirectory?,
-        featureName: String?
+        featureName: String?,
+        packageName: String
     ): String {
-        return ""
+        val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
+        val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
+
+
+        return """package ${packageName}.${featureNameLowerCase}.data.api
+
+interface ${featureNameUpperCase}ApiService {
+
+}"""
 
     }
 }

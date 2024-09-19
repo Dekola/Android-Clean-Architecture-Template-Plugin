@@ -6,10 +6,12 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiManager
+import com.intellij.util.ui.JBUI
 import java.awt.Dimension
 import java.awt.FlowLayout
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.awt.Insets
 import javax.swing.Box
 import javax.swing.ButtonGroup
 import javax.swing.JButton
@@ -36,8 +38,15 @@ class CleanArchitectureTemplateName(
     private val kotlinRadioButton: JRadioButton = JRadioButton("Kotlin", true)
     private val languageGroup: ButtonGroup = ButtonGroup()
 
+    private val hiltButton: JRadioButton = JRadioButton("Hilt", true)
+    private val koinRadioButton: JRadioButton = JRadioButton("Koin")
+    private val daggerRadioButton: JRadioButton = JRadioButton("Dagger")
+    private val dIRadioGroup: ButtonGroup = ButtonGroup()
+
     private val featureNameText: JLabel = JLabel()
-    private val createClassButton = JButton("Create")
+    private val languageHeaderText: JLabel = JLabel()
+    private val dIHeaderText: JLabel = JLabel()
+//    private val createClassButton = JButton("Create")
 
     init {
         init()
@@ -48,7 +57,11 @@ class CleanArchitectureTemplateName(
 
     override fun createCenterPanel(): JComponent {
         panel = JPanel(GridBagLayout())
-        val constraints = GridBagConstraints()
+        val constraints = GridBagConstraints().apply {
+            fill = GridBagConstraints.HORIZONTAL
+            anchor = GridBagConstraints.WEST
+            insets = JBUI.insets(5)
+        }
 
         featureNameText.text = "Class Name"
         constraints.gridy += 1
@@ -59,35 +72,71 @@ class CleanArchitectureTemplateName(
         constraints.gridy += 1
         panel.add(featureNameTextField, constraints)
 
-        languageGroup.add(kotlinRadioButton);
-        languageGroup.add(javaRadioButton);
-        languageGroup.add(flutterRadioButton);
+        languageHeaderText.text = "Language"
+        constraints.gridy += 1
+        panel.add(languageHeaderText, constraints)
+
+        languageGroup.add(kotlinRadioButton)
+        languageGroup.add(javaRadioButton)
+        languageGroup.add(flutterRadioButton)
 
         constraints.gridy += 1
         panel.add(javaRadioButton, constraints)
         constraints.gridy += 1
         panel.add(kotlinRadioButton, constraints)
-
-
-        val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
-        buttonPanel.add(createClassButton)
         constraints.gridy += 1
-        constraints.weighty = 0.0
-        panel.add(buttonPanel, constraints)
+        panel.add(flutterRadioButton, constraints)
+
+        dIRadioGroup.add(hiltButton)
+        dIRadioGroup.add(koinRadioButton)
+        dIRadioGroup.add(daggerRadioButton)
+
+        dIHeaderText.text = "Dependency Injection"
+        constraints.gridy += 1
+        panel.add(dIHeaderText, constraints)
+
+        constraints.gridy += 1
+        panel.add(hiltButton, constraints)
+        constraints.gridy += 1
+        panel.add(koinRadioButton, constraints)
+        constraints.gridy += 1
+        panel.add(daggerRadioButton, constraints)
+
+//        val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
+//        buttonPanel.add(createClassButton)
+//        constraints.gridy += 1
+//        constraints.weighty = 0.0
+//        panel.add(buttonPanel, constraints)
 
         constraints.gridy += 1
         constraints.weighty = 1.0
         panel.add(Box.createVerticalGlue(), constraints)
 
-        createClassButton.addActionListener {
-            try {
-                createTemplate()
-            } catch (e: Exception) {
-                showErrorDialog(e.message, title = "Error Creating Classes")
-            }
-        }
+//        createClassButton.addActionListener {
+//            try {
+//                createTemplate()
+//            } catch (e: Exception) {
+//                showErrorDialog(e.message, title = "Error Creating Classes")
+//            }
+//        }
+
+        flutterRadioButton.isEnabled = false
+        daggerRadioButton.isEnabled = false
+        koinRadioButton.isEnabled = false
+
         return panel
     }
+
+    override fun doOKAction() {
+        try {
+            createTemplate()
+        } catch (e: Exception) {
+            showErrorDialog(e.message, title = "Error Creating Classes")
+        }
+        super.doOKAction()
+    }
+
+
 
     private fun createTemplate() {
         val selectedLanguage = getSelectedLanguage();
