@@ -120,6 +120,7 @@ class CleanArchitectureTemplateName(
 //            }
 //        }
 
+        javaRadioButton.isEnabled = false
         flutterRadioButton.isEnabled = false
         daggerRadioButton.isEnabled = false
         koinRadioButton.isEnabled = false

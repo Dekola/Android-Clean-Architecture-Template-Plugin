@@ -41,7 +41,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) : {
+class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) {
 
 }
             """
@@ -127,6 +127,40 @@ class ${featureNameUpperCase}RemoteDataSource @Inject constructor(
 interface ${featureNameUpperCase}ApiService {
 
 }"""
+
+    }
+
+    fun getDiCode(
+        selectedLanguage: LanguageSelection,
+        baseDirectory: PsiDirectory?,
+        featureName: String,
+        packageName: String
+    ): String {
+        val featureNameLowerCase = featureName.replaceFirstChar { it.lowercase() }
+        val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
+
+        return """package ${packageName}.${featureNameLowerCase}.di
+            
+import ${packageName}.${featureNameLowerCase}.data.api.${featureNameUpperCase}ApiService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object ${featureNameUpperCase}Module {
+
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit): ${featureNameUpperCase}ApiService {
+        return retrofit.create(${featureNameUpperCase}ApiService::class.java)
+    }
+    
+}
+"""
 
     }
 }

@@ -26,16 +26,19 @@ object ClassCreator {
         val repositoryDirectory = createDirectory(project, dataDirectory, "repository")
         val remoteDataSourceDirectory = createDirectory(project, dataDirectory, "remoteDataSource")
         val apiDirectory = createDirectory(project, dataDirectory, "api")
+        val diDirectory = createDirectory(project, baseFeatureDirectory, "di")
 
         val viewModelCode:String = CodeGeneratorClass.getViewModelCode(selectedLanguage, baseDirectory, featureName, packageName)
         val repositoryCode:String = CodeGeneratorClass.getRepositoryCode(selectedLanguage, baseDirectory, featureName, packageName)
         val remoteDataSourceCode:String = CodeGeneratorClass.getRemoteDataSourceCode(selectedLanguage, baseDirectory, featureName, packageName)
         val apiInterfaceCode:String = CodeGeneratorClass.getApiInterfaceCode(selectedLanguage, baseDirectory, featureName, packageName)
+        val diCode:String = CodeGeneratorClass.getDiCode(selectedLanguage, baseDirectory, featureName, packageName)
 
         createClass(project, viewModelDirectory, selectedLanguage, featureName, "ViewModel", viewModelCode)
         createClass(project, repositoryDirectory, selectedLanguage, featureName, "Repository", repositoryCode)
         createClass(project, remoteDataSourceDirectory, selectedLanguage, featureName, "RemoteDataSource", remoteDataSourceCode)
         createClass(project, apiDirectory, selectedLanguage, featureName, "ApiInterface", apiInterfaceCode)
+        createClass(project, diDirectory, selectedLanguage, featureName, "Module", diCode)
 
     }
 
