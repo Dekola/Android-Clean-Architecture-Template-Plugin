@@ -67,7 +67,7 @@ class CleanArchitectureTemplateName(
         constraints.gridy += 1
         panel.add(featureNameText, constraints)
 
-        featureNameTextField.text = "ApiService"
+//        featureNameTextField.text = "ApiService"
         featureNameTextField.preferredSize = Dimension(250, 30)
         constraints.gridy += 1
         panel.add(featureNameTextField, constraints)
@@ -151,7 +151,7 @@ class CleanArchitectureTemplateName(
                 folder,
                 featureNameTextField.text,
                 selectedLanguage,
-                getPackageName(selectedFile!!)
+                getPackageName(selectedFile)
             )
 
         }

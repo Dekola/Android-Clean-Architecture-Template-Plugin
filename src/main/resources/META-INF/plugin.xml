@@ -1,14 +1,14 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.dekola.androidcleanarchitecturetemplateplugin</id>
-    <name>Android-Clean-Architecture-Template-Plugin</name>
+    <id>com.github.dekola.androidMvvmBoilerPlate</id>
+    <name>Android MVVM Boilerplate</name>
     <vendor email="Akano.Adekola@gmail.com" logo="pluginIcon.svg"
         url="https://dekola.github.io/Akano_Adekola_Portfolio/">
         Adekola Akano
     </vendor>
 
     <description><![CDATA[
-      Android Studio plugin for Creating clean architecture template folder and classes in Java and Kotlin.
+      Android Studio plugin for Creating clean architecture boiler plate template folder and classes in Java and Kotlin.
     ]]></description>
 
     <depends>com.intellij.modules.lang</depends>
@@ -23,11 +23,11 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <actions>
-        <group id="com.adekola.androidcleanarchitecturetemplateplugin.Actions" text="Clean arc template">
-            <action id="com.adekola.androidcleanarchitecturetemplateplugin.CreateCleanArchitectureTemplate"
+        <group id="com.adekola.androidMvvmBoilerPlate.Actions" text="Android MVVM Boilerplate">
+            <action id="com.adekola.androidMvvmBoilerPlate.CreateCleanArchitectureTemplate"
                 class="com.github.dekola.androidcleanarchitecturetemplateplugin.CreateCleanArchitectureTemplate"
-                text="Create clean arc template"
-                description="Create clean arc template">
+                text="Android MVVM Boilerplate"
+                description="Android MVVM Boilerplate">
                 <!-- Add to DirectoryPopupMenu group -->
                 <add-to-group group-id="NewGroup" anchor="last"/>
 <!--                <add-to-group group-id="someGroupId" relative-to-action="someActionId" anchor="first/last/before someActionOrGroupId/after someActionOrGroupId"/>-->
