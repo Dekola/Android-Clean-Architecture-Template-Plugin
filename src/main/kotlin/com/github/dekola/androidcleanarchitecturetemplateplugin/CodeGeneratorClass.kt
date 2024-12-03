@@ -14,8 +14,7 @@ object CodeGeneratorClass {
         val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
         val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
 
-
-        return when (selectedLanguage) {
+         when (selectedLanguage) {
             LanguageSelection.JAVA -> {
                 return """package ${packageName}.${featureNameLowerCase}.ui
                     

@@ -16,7 +16,7 @@ class CreateCleanArchitectureTemplate : AnAction() {
             println("Selected directory: ${selectedFile.toNioPath()}")
             println("Selected directory: ${selectedFile.presentableUrl}")
             println("Selected directory: $selectedFile")
-            CleanArchitectureTemplateName(event, selectedFile).show()
+                .CleanArchitectureTemplateName(event, selectedFile).show()
             // Implement the logic you want to perform on the selected directory
         } else {
             // Handle cases where the selection is not a directory

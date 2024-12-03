@@ -8,13 +8,10 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiManager
 import com.intellij.util.ui.JBUI
 import java.awt.Dimension
-import java.awt.FlowLayout
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
-import java.awt.Insets
 import javax.swing.Box
 import javax.swing.ButtonGroup
-import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -30,8 +27,8 @@ class CleanArchitectureTemplateName(
     private lateinit var panel: JPanel
 
     private val featureNameTextField: JTextField = JTextField()
-    private val responseNameTextField: JTextField = JTextField()
-    private val bodyNameTextField: JTextField = JTextField()
+//    private val responseNameTextField: JTextField = JTextField()
+//    private val bodyNameTextField: JTextField = JTextField()
 
     private val javaRadioButton: JRadioButton = JRadioButton("Java")
     private val flutterRadioButton: JRadioButton = JRadioButton("Flutter")
