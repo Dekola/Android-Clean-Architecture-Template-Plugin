@@ -16,17 +16,8 @@ object CodeGeneratorClass {
 
          when (selectedLanguage) {
             LanguageSelection.JAVA -> {
-                return """package ${packageName}.${featureNameLowerCase}.ui
+                return """
                     
-
-import ${packageName}.${featureNameLowerCase}.data.repository.${featureName}Repository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-
-@HiltViewModel
-class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) {
-
-}
             """
             }
 
@@ -48,18 +39,10 @@ class ${featureNameUpperCase}ViewModel @Inject constructor(private val repositor
             }
 
             LanguageSelection.FLUTTER -> {
-                return """package ${packageName}.${featureNameLowerCase}.ui
+                return """
+                   
                     
-
-import ${packageName}.${featureNameLowerCase}.data.repository.${featureName}Repository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-
-@HiltViewModel
-class ${featureNameUpperCase}ViewModel @Inject constructor(private val repository: ${featureNameUpperCase}Repository) : {
-
-}
-            """
+                """
             }
         }
     }
@@ -73,8 +56,16 @@ class ${featureNameUpperCase}ViewModel @Inject constructor(private val repositor
         val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
         val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
 
+        when (selectedLanguage) {
+            LanguageSelection.JAVA -> {
+                return """
+                    
+            """
+            }
 
-        return """package ${packageName}.${featureNameLowerCase}.data.repository
+            LanguageSelection.KOTLIN -> {
+
+                return """package ${packageName}.${featureNameLowerCase}.data.repository
 
 import ${packageName}.${featureNameLowerCase}.data.remoteDataSource.${featureName}RemoteDataSource
 import javax.inject.Inject
@@ -84,6 +75,18 @@ class ${featureNameUpperCase}Repository @Inject constructor(
 ) {
 
 }"""
+
+            }
+
+            LanguageSelection.FLUTTER -> {
+                return """
+                   
+                    
+                """
+            }
+        }
+
+
     }
 
     fun getRemoteDataSourceCode(
@@ -96,8 +99,16 @@ class ${featureNameUpperCase}Repository @Inject constructor(
         val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
         val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
 
+        when (selectedLanguage) {
+            LanguageSelection.JAVA -> {
+                return """
+                    
+            """
+            }
 
-        return """package ${packageName}.${featureNameLowerCase}.data.remoteDataSource
+            LanguageSelection.KOTLIN -> {
+
+                return """package ${packageName}.${featureNameLowerCase}.data.remoteDataSource
 
 import ${packageName}.${featureNameLowerCase}.data.api.${featureName}ApiService
 import javax.inject.Inject
@@ -108,6 +119,18 @@ class ${featureNameUpperCase}RemoteDataSource @Inject constructor(
 
 }
 """
+
+            }
+
+            LanguageSelection.FLUTTER -> {
+                return """
+                   
+                    
+                """
+            }
+        }
+
+
 
     }
 
@@ -120,12 +143,32 @@ class ${featureNameUpperCase}RemoteDataSource @Inject constructor(
         val featureNameLowerCase = featureName!!.replaceFirstChar { it.lowercase() }
         val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
 
+        when (selectedLanguage) {
+            LanguageSelection.JAVA -> {
+                return """
+                    
+            """
+            }
 
-        return """package ${packageName}.${featureNameLowerCase}.data.api
+            LanguageSelection.KOTLIN -> {
+
+                return """package ${packageName}.${featureNameLowerCase}.data.api
 
 interface ${featureNameUpperCase}ApiService {
 
 }"""
+
+            }
+
+            LanguageSelection.FLUTTER -> {
+                return """
+                   
+                    
+                """
+            }
+        }
+
+
 
     }
 
@@ -138,28 +181,48 @@ interface ${featureNameUpperCase}ApiService {
         val featureNameLowerCase = featureName.replaceFirstChar { it.lowercase() }
         val featureNameUpperCase = featureName.replaceFirstChar { it.uppercase() }
 
-        return """package ${packageName}.${featureNameLowerCase}.di
+        when (selectedLanguage) {
+            LanguageSelection.JAVA -> {
+                return """
+                    
+            """
+            }
+
+            LanguageSelection.KOTLIN -> {
+
+                return """package ${packageName}.${featureNameLowerCase}.di
             
-import ${packageName}.${featureNameLowerCase}.data.api.${featureNameUpperCase}ApiService
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import javax.inject.Singleton
+            import ${packageName}.${featureNameLowerCase}.data.api.${featureNameUpperCase}ApiService
+            import dagger.Module
+            import dagger.Provides
+            import dagger.hilt.InstallIn
+            import dagger.hilt.components.SingletonComponent
+            import retrofit2.Retrofit
+            import javax.inject.Singleton
+            
+            @Module
+            @InstallIn(SingletonComponent::class)
+            object ${featureNameUpperCase}Module {
+            
+                @Singleton
+                @Provides
+                fun provideApiService(retrofit: Retrofit): ${featureNameUpperCase}ApiService {
+                    return retrofit.create(${featureNameUpperCase}ApiService::class.java)
+                }
+                
+            }
+            """
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ${featureNameUpperCase}Module {
+            }
 
-    @Singleton
-    @Provides
-    fun provideApiService(retrofit: Retrofit): ${featureNameUpperCase}ApiService {
-        return retrofit.create(${featureNameUpperCase}ApiService::class.java)
-    }
-    
-}
-"""
+            LanguageSelection.FLUTTER -> {
+                return """
+                   
+                    
+                """
+            }
+        }
+
 
     }
 }
